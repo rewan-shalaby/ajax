@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      td {
+        border: 2px solid black;
+      }
+      th {
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <table id="myTable" hidden>
+      <tr>
+        <th>Email</th>
+        <th>Image</th>
+      </tr>
+    </table>
+    <script>
+      var url = "https://reqres.in/api/users?page=2";
+      var xhttp = new XMLHttpRequest();
+      xhttp.open("GET", url);
+      xhttp.send();
+      xhttp.onload = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          var jsObj = JSON.parse(xhttp.responseText);
+          var data = jsObj.data;
+          if (data) {
+            var table = document.getElementById("myTable");
+            table.hidden = false;
+            data.forEach(function (dt) {
+              var email = dt["email"];
+              var image = dt["avatar"];
+              var row = table.insertRow(1);
+              var cell1 = row.insertCell(0);
+              var cell2 = row.insertCell(1);
+              cell1.innerHTML = email;
+              cell2.innerHTML = "<img src =  '" + image + "'> ";
+            });
+          }
+        }
+      };
+    </script>
+  </body>
+</html>
